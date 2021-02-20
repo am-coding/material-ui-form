@@ -115,7 +115,6 @@ function Form() {
                 label="Hostel Name"
                 value={hostel}
                 onChange={handleChange}
-                helperText="Please select your hostel name"
               >
                 {hostels.map((option) => (
                   <MenuItem key={option} value={option}>
@@ -167,7 +166,6 @@ function Form() {
                 label="Complaint Topic"
                 value={complaint}
                 onChange={handleComplaintChange}
-                helperText="Please select your complaint topic"
               >
                 {complaints.map((option) => (
                   <MenuItem key={option} value={option}>
