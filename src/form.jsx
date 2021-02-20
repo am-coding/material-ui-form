@@ -1,15 +1,10 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
@@ -38,22 +33,33 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const hostels = ["valmiki bhavan", "gautam bhavan"];
+const complaints = ["room issue", "hostel issue", "mess issue", "others"];
+
 function Form() {
   const classes = useStyles();
+  const [hostel, setHostel] = React.useState("");
+  const [complaint, setComplaint] = React.useState("");
 
+  const handleChange = (event) => {
+    setHostel(event.target.value);
+  };
+  const handleComplaintChange = (event) => {
+    setComplaint(event.target.value);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography variant="h5">Complaint Form</Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="name"
                 name="name"
                 variant="outlined"
-                required
+                required={true}
                 fullWidth
                 id="name"
                 label="Name"
@@ -73,7 +79,7 @@ function Form() {
                 autoComplete="id"
                 name="id"
                 variant="outlined"
-                required
+                required={true}
                 fullWidth
                 id="id"
                 label="ID"
@@ -89,7 +95,7 @@ function Form() {
                 autoComplete="room-number"
                 name="room-number"
                 variant="outlined"
-                required
+                required={true}
                 fullWidth
                 id="room-number"
                 label="Room Number"
@@ -98,19 +104,25 @@ function Form() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                style={{ width: "100%", textAlign: "left" }}
                 className={classes.textfield}
                 InputProps={{
                   className: classes.input
                 }}
-                autoComplete="Hostel Name"
-                name="hostel-name"
                 variant="outlined"
-                required
-                fullWidth
-                id="hostel-name"
+                id="standard-select-hostel"
+                select
                 label="Hostel Name"
-                autoFocus
-              />
+                value={hostel}
+                onChange={handleChange}
+                helperText="Please select your hostel name"
+              >
+                {hostels.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -119,13 +131,12 @@ function Form() {
                   className: classes.input
                 }}
                 variant="outlined"
-                required
-                multiline
-                rows={5}
+                required={true}
                 fullWidth
-                name="Complaint"
-                label="Complaint topic (Room, Hostel, Other)"
-                id="complaint"
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
@@ -135,29 +146,36 @@ function Form() {
                   className: classes.input
                 }}
                 variant="outlined"
-                required
-                multiline
-                rows={5}
-                fullWidth
-                name="describe-complaint"
-                label="Describe your complaint"
-                id="describe-complaint"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className={classes.textfield}
-                InputProps={{
-                  className: classes.input
-                }}
-                variant="outlined"
-                required
+                required={true}
                 fullWidth
                 name="subject-complaint"
                 label="Subject of your complaint"
                 id="subject-complaint"
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                style={{ width: "100%", textAlign: "left" }}
+                className={classes.textfield}
+                InputProps={{
+                  className: classes.input
+                }}
+                variant="outlined"
+                id="standard-select-hostel"
+                select
+                label="Complaint Topic"
+                value={complaint}
+                onChange={handleComplaintChange}
+                helperText="Please select your complaint topic"
+              >
+                {complaints.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 className={classes.textfield}
@@ -165,12 +183,13 @@ function Form() {
                   className: classes.input
                 }}
                 variant="outlined"
-                required
+                required={true}
+                multiline
+                rows={5}
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                name="describe-complaint"
+                label="Describe your complaint"
+                id="describe-complaint"
               />
             </Grid>
           </Grid>
